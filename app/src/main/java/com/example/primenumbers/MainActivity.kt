@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener{
     private val adapter: Adapter = Adapter { recycler_view.scrollToPosition(it - 1) }
+    private var task: PrimeNumbersTask? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +23,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
     }
 
     override fun onClick(view: View?) {
-        val task = PrimeNumbersTask(adapter)
         when(view) {
-            start_btn -> task.execute()
-            stop_btn -> task.cancel(true)
+            start_btn -> {
+                task?.cancel(true)
+                task = PrimeNumbersTask(adapter)
+                task?.execute()
+            }
+            stop_btn -> task?.cancel(true)
         }
     }
 }

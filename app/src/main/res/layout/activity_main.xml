@@ -15,6 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guide_line_horizontal"
+        android:layout_margin="50dp"
         />
 
     <androidx.constraintlayout.widget.Guideline

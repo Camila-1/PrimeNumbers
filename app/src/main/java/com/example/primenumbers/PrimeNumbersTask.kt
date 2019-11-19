@@ -2,9 +2,9 @@ package com.example.primenumbers
 
 import android.os.AsyncTask
 
-class PrimeNumbersTask(private val adapter: Adapter) : AsyncTask<Long, Long, Long>() {
+class PrimeNumbersTask(private val adapter: Adapter) : AsyncTask<Long, Long, List<Long>>() {
 
-    private val primeNumbers = PrimeNumbers(1000000000) {
+    private val primeNumbers = PrimeNumbers(100) {
         publishProgress(it)
     }
 
@@ -12,13 +12,7 @@ class PrimeNumbersTask(private val adapter: Adapter) : AsyncTask<Long, Long, Lon
         super.onPreExecute()
     }
 
-    override fun doInBackground(vararg params: Long?): Long? {
-        if (!isCancelled) {
-            return primeNumbers.findPrimeNumbers().last()
-        }
-        return 0
-    }
-
+    override fun doInBackground(vararg params: Long?): List<Long> = primeNumbers.findPrimeNumbers()
 
     override fun onProgressUpdate(vararg values: Long?) {
         //super.onProgressUpdate(*values)
@@ -28,9 +22,7 @@ class PrimeNumbersTask(private val adapter: Adapter) : AsyncTask<Long, Long, Lon
     override fun onCancelled() {
         primeNumbers.isCancelled = true
     }
-
-
-    override fun onPostExecute(result: Long?) {
-        super.onPostExecute(result)
-    }
+//    override fun onPostExecute(result: Long?) {
+//        super.onPostExecute(result)
+//    }
 }
