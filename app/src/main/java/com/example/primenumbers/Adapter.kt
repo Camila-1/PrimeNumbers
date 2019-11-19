@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.prime_number.view.*
 
-class Adapter(val numbers: MutableList<Long>, private val callback: (Int) -> Unit) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+class Adapter(var numbers: MutableList<Long>, private val callback: (Int) -> Unit) : RecyclerView.Adapter<Adapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = with(parent){
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.prime_number, this, false))

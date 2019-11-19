@@ -1,10 +1,15 @@
 package com.example.primenumbers
 
+import android.content.res.Configuration
+import android.graphics.drawable.GradientDrawable
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener{
@@ -22,9 +27,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
         val primeNumbers = savedInstanceState?.getLongArray("list")?.toMutableList() ?: mutableListOf()
         adapter = Adapter(primeNumbers) { recycler_view.scrollToPosition(it - 1) }
-        recycler_view.layoutManager = LinearLayoutManager(this)
+
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recycler_view.layoutManager = GridLayoutManager(this, 3)
+        } else recycler_view.layoutManager = LinearLayoutManager(this)
+
         recycler_view.adapter = adapter
         task = PrimeNumbersTask(adapter)
+        if (primeNumbers.isNotEmpty()) task?.execute()
     }
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
@@ -32,9 +42,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         outState.putLongArray("list", adapter.numbers.toLongArray())
     }
 
+//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+//        super.onRestoreInstanceState(savedInstanceState)
+//        adapter.numbers = savedInstanceState.getLongArray("list")?.toMutableList() ?: mutableListOf()
+//    }
+
     override fun onClick(view: View?) {
         when(view) {
             start_btn -> {
+//                if(task?.status == AsyncTask.Status.RUNNING)
+//                    task?.cancel(true)
                 task?.execute()
             }
             stop_btn -> task?.cancel(true)
