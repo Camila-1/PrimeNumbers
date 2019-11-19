@@ -1,15 +1,13 @@
 package com.example.primenumbers
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 
-
-class PrimeNumbers(private val max: Long, private val callback: (Long) -> Unit){
+class PrimeNumbers(private val max: Long, private val list: MutableList<Long>, private val callback: (Long) -> Unit){
 
     var isCancelled: Boolean = false
 
     fun findPrimeNumbers(): MutableList<Long> {
-        return (3..max).fold(mutableListOf(2L)) label@{ primes, item ->
+        if (list.isEmpty()) list.add(2L)
+        return ((list.last() + 1)..max).fold(list.toMutableList()) label@{ primes, item ->
             if (isCancelled) return primes
 
             if(isPrime(item, primes)) {
@@ -20,6 +18,7 @@ class PrimeNumbers(private val max: Long, private val callback: (Long) -> Unit){
         }
     }
 
-    private fun isPrime(num: Long, primes: List<Long>) = !primes.any { num % it == 0L }
+    private fun isPrime(num: Long, primes: List<Long>) = !primes
+        .any { num % it == 0L }
 
 }

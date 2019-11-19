@@ -1,14 +1,10 @@
 package com.example.primenumbers
 
 import android.os.AsyncTask
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.RawValue
 
-@Parcelize
-class PrimeNumbersTask(private val adapter: @RawValue Adapter) : AsyncTask<Long, Long, List<Long>>(), Parcelable {
+class PrimeNumbersTask (private val adapter: Adapter) : AsyncTask<Long, Long, List<Long>>(){
 
-    private val primeNumbers = PrimeNumbers(1000000) {
+    private val primeNumbers = PrimeNumbers(1000000, adapter.numbers) {
         publishProgress(it)
     }
 
