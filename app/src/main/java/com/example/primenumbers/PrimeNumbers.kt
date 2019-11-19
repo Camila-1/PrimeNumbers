@@ -1,6 +1,10 @@
 package com.example.primenumbers
 
-class PrimeNumbers(private val max: Long, private val callback: (Long) -> Unit) {
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+
+class PrimeNumbers(private val max: Long, private val callback: (Long) -> Unit){
 
     var isCancelled: Boolean = false
 
