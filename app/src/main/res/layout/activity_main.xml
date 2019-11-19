@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="clip_vertical"
     tools:context=".MainActivity">
 
-    <FrameLayout
-        android:id="@+id/recycler_view_fragment"
-        android:layout_width="match_parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/guide_line_horizontal"/>
+        app:layout_constraintBottom_toTopOf="@id/guide_line_horizontal"
+        />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_line_horizontal"
