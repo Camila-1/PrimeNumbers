@@ -3,15 +3,12 @@ package com.example.primenumbers
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener{
-
-
     private lateinit var adapter: Adapter
     private var task: PrimeNumbersTask? = null
 
@@ -31,7 +28,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
         recycler_view.adapter = adapter
         task = PrimeNumbersTask(adapter, this)
-        if (primeNumbers.isNotEmpty()) task?.execute()
+        if (primeNumbers.isNotEmpty()) {
+            task?.cancel(true)
+            task?.execute()
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        task?.cancel(true)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -46,11 +51,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
     override fun onClick(view: View?) {
         when(view) {
-            start_btn -> {
-//                if(task?.status == AsyncTask.Status.RUNNING)
-//                    task?.cancel(true)
-                task?.execute()
-            }
+            start_btn -> task?.execute()
             stop_btn -> task?.cancel(true)
         }
     }
