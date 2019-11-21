@@ -11,7 +11,8 @@ class PrimeNumbersTask (private val adapter: Adapter, private val context: Conte
         mContext = context
     }
 
-    private val primeNumbers = PrimeNumbers(10000000, adapter.numbers) {
+    private val primeNumbers = PrimeNumbers(100, adapter.numbers) {
+        Thread.sleep(200)
         publishProgress(it)
     }
 
@@ -25,8 +26,8 @@ class PrimeNumbersTask (private val adapter: Adapter, private val context: Conte
         primeNumbers.isCancelled = true
     }
 
-//    override fun onPostExecute(result: List<Long>?) {
-//        super.onPostExecute(result)
+    override fun onPostExecute(result: List<Long>?) {
+        super.onPostExecute(result)
 //        if (isFinished) {
 //            AlertDialog.Builder(context)
 //                .setTitle("Вычисление выполнено")
@@ -34,5 +35,5 @@ class PrimeNumbersTask (private val adapter: Adapter, private val context: Conte
 //                .setPositiveButton("OK", null)
 //                .show()
 //        }
-//    }
+    }
 }
