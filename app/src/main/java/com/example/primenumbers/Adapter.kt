@@ -16,14 +16,6 @@ class Adapter(var numbers: MutableList<Long>, private val callback: (Int) -> Uni
 
     override fun getItemCount(): Int = numbers.size
 
-    fun addItem(item: Long?){
-        if (item != null) {
-            numbers.add(item)
-            super.notifyItemInserted(itemCount)
-            callback(itemCount)
-        }
-    }
-
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         fun bind(number: Long) = with(itemView) {
             prime.text = number.toString()

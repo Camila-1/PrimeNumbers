@@ -1,3 +1,4 @@
+
 package com.example.primenumbers
 
 
@@ -5,16 +6,15 @@ class PrimeNumbers(private val max: Long, private val list: MutableList<Long>, p
 
     var isCancelled: Boolean = false
 
-    fun findPrimeNumbers(): MutableList<Long> {
+    fun findPrimeNumbers(){
         if (list.isEmpty()) list.add(2L)
-        return ((list.last() + 1)..max).fold(list.toMutableList()) label@{ primes, item ->
-            if (isCancelled) return primes
+        ((list.last() + 1)..max).forEach {item ->
+            if (isCancelled) return
 
-            if(isPrime(item, primes)) {
-                primes.add(item)
+            if(isPrime(item, list)) {
+                list.add(item)
                 callback(item)
             }
-            return@label primes
         }
     }
 

@@ -1,24 +1,19 @@
+
 package com.example.primenumbers
 
-import android.content.Context
 import android.os.AsyncTask
 
-class PrimeNumbersTask (private val adapter: Adapter, private val context: Context) : AsyncTask<Long, Long, List<Long>>(){
-    private var mContext: Context
-    var isFinished = false
-
-    init {
-        mContext = context
-    }
+class PrimeNumbersTask (private val adapter: Adapter) : AsyncTask<Long, Long, Unit>(){
 
     private val primeNumbers = PrimeNumbers(10000000, adapter.numbers) {
+        Thread.sleep(100)
         publishProgress(it)
     }
 
-    override fun doInBackground(vararg params: Long?): List<Long> = primeNumbers.findPrimeNumbers()
+    override fun doInBackground(vararg params: Long?) = primeNumbers.findPrimeNumbers()
 
     override fun onProgressUpdate(vararg values: Long?) {
-        adapter.addItem(values.first())
+        adapter.notifyDataSetChanged()
     }
 
     override fun onCancelled() {

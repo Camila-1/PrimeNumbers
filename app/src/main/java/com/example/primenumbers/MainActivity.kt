@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), View.OnClickListener{
     private lateinit var adapter: Adapter
     private var task: PrimeNumbersTask? = null
+    private var primeNumbers = mutableListOf<Long>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         start_btn.setOnClickListener(this)
         stop_btn.setOnClickListener(this)
 
-        val primeNumbers = savedInstanceState?.getLongArray("list")?.toMutableList() ?: mutableListOf()
+        primeNumbers = savedInstanceState?.getLongArray("list")?.toMutableList() ?: mutableListOf()
         adapter = Adapter(primeNumbers) { recycler_view.scrollToPosition(it - 1) }
 
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -27,9 +28,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         } else recycler_view.layoutManager = LinearLayoutManager(this)
 
         recycler_view.adapter = adapter
-        task = PrimeNumbersTask(adapter, this)
+
         if (primeNumbers.isNotEmpty()) {
-            task?.cancel(true)
+            task = PrimeNumbersTask(adapter)
             task?.execute()
         }
     }
@@ -44,14 +45,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         outState.putLongArray("list", adapter.numbers.toLongArray())
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        adapter.numbers = savedInstanceState.getLongArray("list")?.toMutableList() ?: mutableListOf()
-    }
-
     override fun onClick(view: View?) {
         when(view) {
-            start_btn -> task?.execute()
+            start_btn -> {
+                task = PrimeNumbersTask(adapter)
+                task?.execute()
+            }
             stop_btn -> task?.cancel(true)
         }
     }
