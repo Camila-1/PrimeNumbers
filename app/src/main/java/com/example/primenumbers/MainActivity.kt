@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         }
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
+    override fun onPause() {
+        super.onPause()
         task?.cancel(true)
     }
 
