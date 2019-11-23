@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
@@ -11,6 +12,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), View.OnClickListener{
     private lateinit var adapter: Adapter
     private var task: PrimeNumbersTask? = null
+    private val showDialog: (Int) -> Unit = { count ->
+        AlertDialog.Builder(this)
+            .setTitle("Вычисление выполнено")
+            .setMessage("Сгенерировано $count простых чисел")
+            .setPositiveButton("OK", null)
+            .show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +37,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         recycler_view.adapter = adapter
 
         if (primeNumbers.isNotEmpty()) {
-            task = PrimeNumbersTask(adapter)
+            task = PrimeNumbersTask(adapter, showDialog)
             task?.execute()
         }
     }
@@ -44,15 +52,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         outState.putLongArray("list", adapter.numbers.toLongArray())
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        adapter.numbers = savedInstanceState.getLongArray("list")?.toMutableList() ?: mutableListOf()
-    }
-
     override fun onClick(view: View?) {
         when(view) {
             start_btn -> {
-                task = PrimeNumbersTask(adapter)
+                task = PrimeNumbersTask(adapter, showDialog)
                 task?.execute()
             }
             stop_btn -> task?.cancel(true)

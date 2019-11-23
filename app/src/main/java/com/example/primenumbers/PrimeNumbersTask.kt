@@ -1,11 +1,10 @@
 package com.example.primenumbers
 
-import android.content.Context
 import android.os.AsyncTask
 
-class PrimeNumbersTask (private val adapter: Adapter) : AsyncTask<Long, Long, List<Long>>(){
+class PrimeNumbersTask (private val adapter: Adapter, private val showAlertDialog: (Int) -> Unit) : AsyncTask<Long, Long, List<Long>>(){
 
-    private val primeNumbers = PrimeNumbers(1000000, adapter.numbers) {
+    private val primeNumbers = PrimeNumbers(1000, adapter.numbers.toList().toMutableList()) {
         Thread.sleep(100)
         publishProgress(it)
     }
@@ -20,4 +19,15 @@ class PrimeNumbersTask (private val adapter: Adapter) : AsyncTask<Long, Long, Li
         primeNumbers.isCancelled = true
     }
 
+    override fun onPostExecute(result: List<Long>?) {
+        super.onPostExecute(result)
+        if (!isExecuted) {
+            showAlertDialog(result!!.size)
+            isExecuted = true
+        }
+    }
+
+    companion object {
+        var isExecuted = false
+    }
 }

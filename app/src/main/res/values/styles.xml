@@ -6,22 +6,21 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="alertDialogTheme">@style/AlertDialog</item>
     </style>
 
-    <style name="AlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:windowBackground">@drawable/alert_dialog</item>
-        <item name="buttonBarPositiveButtonStyle">@style/DialogButton</item>
-        <item name="buttonBarNegativeButtonStyle">@style/DialogButton</item>
-        <item name="buttonBarNeutralButtonStyle">@style/DialogButton</item>
-        <item name="android:textSize">15sp</item>
-    </style>
+<!--    <style name="AlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">-->
+<!--        <item name="android:textColor">@android:color/white</item>-->
+<!--        <item name="android:windowBackground">@drawable/alert_dialog</item>-->
+<!--        <item name="buttonBarPositiveButtonStyle">@style/DialogButton</item>-->
+<!--        <item name="buttonBarNegativeButtonStyle">@style/DialogButton</item>-->
+<!--        <item name="buttonBarNeutralButtonStyle">@style/DialogButton</item>-->
+<!--        <item name="android:textSize">15sp</item>-->
+<!--    </style>-->
 
-    <style name="DialogButton" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">20sp</item>
-    </style>
+<!--    <style name="DialogButton" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">-->
+<!--        <item name="android:textColor">@android:color/white</item>-->
+<!--        <item name="android:textSize">20sp</item>-->
+<!--    </style>-->
 
 
 
