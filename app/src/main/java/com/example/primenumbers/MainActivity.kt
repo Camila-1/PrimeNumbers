@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), View.OnClickListener{
     private lateinit var adapter: Adapter
     private var task: PrimeNumbersTask? = null
+    private var isStopped: Boolean = false
     private val showDialog: (Int) -> Unit = { count ->
         AlertDialog.Builder(this)
             .setTitle("Вычисление выполнено")
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
         val primeNumbers = savedInstanceState?.getLongArray("list")?.toMutableList() ?: mutableListOf()
         adapter = Adapter(primeNumbers) { recycler_view.scrollToPosition(it - 1) }
+        isStopped = savedInstanceState?.getBoolean("isStopped") ?: false
 
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             recycler_view.layoutManager = GridLayoutManager(this, 3)
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
         recycler_view.adapter = adapter
 
-        if (primeNumbers.isNotEmpty()) {
+        if (primeNumbers.isNotEmpty() && !isStopped) {
             task = PrimeNumbersTask(adapter, showDialog)
             task?.execute()
         }
@@ -50,15 +52,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putLongArray("list", adapter.numbers.toLongArray())
+        outState.putBoolean("isStopped", isStopped)
     }
 
     override fun onClick(view: View?) {
         when(view) {
             start_btn -> {
+                isStopped = false
                 task = PrimeNumbersTask(adapter, showDialog)
                 task?.execute()
             }
-            stop_btn -> task?.cancel(true)
+            stop_btn -> {
+                isStopped = true
+                task?.cancel(true)
+            }
         }
     }
 }
