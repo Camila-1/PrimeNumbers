@@ -3,16 +3,10 @@ package com.example.primenumbers
 import android.content.Context
 import android.os.AsyncTask
 
-class PrimeNumbersTask (private val adapter: Adapter, private val context: Context) : AsyncTask<Long, Long, List<Long>>(){
-    private var mContext: Context
-    var isFinished = false
+class PrimeNumbersTask (private val adapter: Adapter) : AsyncTask<Long, Long, List<Long>>(){
 
-    init {
-        mContext = context
-    }
-
-    private val primeNumbers = PrimeNumbers(100, adapter.numbers) {
-        Thread.sleep(200)
+    private val primeNumbers = PrimeNumbers(1000000, adapter.numbers) {
+        Thread.sleep(100)
         publishProgress(it)
     }
 
@@ -26,14 +20,4 @@ class PrimeNumbersTask (private val adapter: Adapter, private val context: Conte
         primeNumbers.isCancelled = true
     }
 
-    override fun onPostExecute(result: List<Long>?) {
-        super.onPostExecute(result)
-//        if (isFinished) {
-//            AlertDialog.Builder(context)
-//                .setTitle("Вычисление выполнено")
-//                .setMessage("Сгенерировано ${result?.size} простых чисел")
-//                .setPositiveButton("OK", null)
-//                .show()
-//        }
-    }
 }

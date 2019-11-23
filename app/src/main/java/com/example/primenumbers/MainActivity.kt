@@ -27,15 +27,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         } else recycler_view.layoutManager = LinearLayoutManager(this)
 
         recycler_view.adapter = adapter
-        task = PrimeNumbersTask(adapter, this)
+
         if (primeNumbers.isNotEmpty()) {
-            task?.cancel(true)
+            task = PrimeNumbersTask(adapter)
             task?.execute()
         }
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
+    override fun onPause() {
+        super.onPause()
         task?.cancel(true)
     }
 
@@ -51,7 +51,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
 
     override fun onClick(view: View?) {
         when(view) {
-            start_btn -> task?.execute()
+            start_btn -> {
+                task = PrimeNumbersTask(adapter)
+                task?.execute()
+            }
             stop_btn -> task?.cancel(true)
         }
     }
