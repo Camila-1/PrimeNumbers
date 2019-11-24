@@ -6,22 +6,41 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">#283593</item>
+        <item name="alertDialogTheme">@style/YDialog</item>
     </style>
 
-<!--    <style name="AlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">-->
-<!--        <item name="android:textColor">@android:color/white</item>-->
-<!--        <item name="android:windowBackground">@drawable/alert_dialog</item>-->
-<!--        <item name="buttonBarPositiveButtonStyle">@style/DialogButton</item>-->
-<!--        <item name="buttonBarNegativeButtonStyle">@style/DialogButton</item>-->
-<!--        <item name="buttonBarNeutralButtonStyle">@style/DialogButton</item>-->
-<!--        <item name="android:textSize">15sp</item>-->
-<!--    </style>-->
+    <style name="YDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <!-- Base colors -->
+        <item name="android:textColorPrimary">@color/dialog_text</item>
+        <item name="android:windowBackground">@drawable/alert_dialog</item>
 
-<!--    <style name="DialogButton" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">-->
-<!--        <item name="android:textColor">@android:color/white</item>-->
-<!--        <item name="android:textSize">20sp</item>-->
-<!--    </style>-->
+        <!-- Button styles -->
+        <item name="buttonBarPositiveButtonStyle">@style/YDialogPositiveButton</item>
 
+        <!-- Sizes -->
+        <item name="android:lineSpacingExtra">@dimen/dialog_line_spacing</item>
+        <item name="android:textSize">@dimen/dialog_text_size</item>
+        <item name="android:windowTitleStyle">@style/YDialogTitleTextAppearance</item>
+    </style>
 
+    <style name="YDialogButton" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/dialog_button</item>
+        <item name="android:textSize">@dimen/dialog_buttons_size</item>
+    </style>
+
+    <style name="YDialogPositiveButton" parent="YDialogButton">
+        <item name="android:textColor">@color/dialog_accent_button</item>
+    </style>
+
+    <style name="YDialogTitleTextAppearance" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textSize">@dimen/dialog_title_size</item>
+        <item name="android:textColor">@color/dialog_text</item>
+    </style>
+
+    <dimen name="dialog_line_spacing">2dp</dimen>
+    <dimen name="dialog_title_size">20sp</dimen>
+    <dimen name="dialog_text_size">16sp</dimen>
+    <dimen name="dialog_buttons_size">14sp</dimen>
 
 </resources>
